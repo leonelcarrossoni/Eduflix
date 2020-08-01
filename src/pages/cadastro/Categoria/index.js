@@ -30,8 +30,14 @@ function CadastroCategoria() {
 
   useEffect(() => {
     console.log('teste');
-    const URL_TOP ='http://localhost:8080/categorias'
-    fetch('URL_TOP');
+    const URL_TOP = 'http://localhost:8080/categorias';
+    fetch(URL_TOP)
+      .then(async (respostaDoServidor) => {
+        const resposta = await respostaDoServidor.json();
+        setCategorias([
+          ...resposta,
+        ]);
+      });
 
   //   setTimeout(() => {
   //     setCategorias([
@@ -51,7 +57,7 @@ function CadastroCategoria() {
   //     ]);
   //   }, 1 * 1000);
   // }, []);
-   })
+  });
 
   return (
     <PageDefault>
