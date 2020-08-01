@@ -1,76 +1,93 @@
-import React, {useState} from 'react';
+/* eslint-disable linebreak-style */
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PageDefault from '../../../components/PageDefault';
 import FormField from '../../../components/FormField';
+import Button from '../../../components/Button';
 
 function CadastroCategoria() {
-  
-  const ValoresIniciais ={
+  const ValoresIniciais = {
     nome: '',
     descricao: '',
     cor: '',
-  }
-  const [categorias, setCategorias] = useState(['Teste']);
+  };
+  const [categorias, setCategorias] = useState([]);
   const [values, setValues] = useState(ValoresIniciais);
 
   function setValue(chave, valor) {
     setValues({
       ...values,
-      [chave]:valor, // nome: 'valor'
-    })
+      [chave]: valor, // nome: 'valor'
+    });
   }
 
   function handleChange(infosDoEvento) {
-    const { name, value } = infosDoEvento.target;
-
     setValue(
-      name,
-      value
+      infosDoEvento.target.getAttribute('name'),
+      infosDoEvento.target.value,
     );
   }
 
+  useEffect(() => {
+    console.log('teste');
+    const URL_TOP ='http://localhost:8080/categorias'
+    fetch('URL_TOP');
+
+  //   setTimeout(() => {
+  //     setCategorias([
+  //       ...categorias,
+  //       {
+  //         id: 1,
+  //         nome: 'Front End',
+  //         descricao: 'name categoria',
+  //         cor: '#cbd1ff',
+  //       },
+  //       {
+  //         id: 2,
+  //         nome: 'back End',
+  //         descricao: 'name categoria2',
+  //         cor: '#cbd1ff',
+  //       },
+  //     ]);
+  //   }, 1 * 1000);
+  // }, []);
+   })
+
   return (
     <PageDefault>
-      <h1>Cadastro de Categoria: {values.nome} </h1>
+      <h1>
+        Cadastro de Categoria:
+        {values.nome}
+      </h1>
 
-      <form onSubmit={function handleSubmit(infosDoEvento){
+      <form onSubmit={function handleSubmit(infosDoEvento) {
         infosDoEvento.preventDefault();
         setCategorias([
           ...categorias,
-          values
+          values,
         ]);
 
-        setValues(ValoresIniciais)
-        
-      }}>
+        setValues(ValoresIniciais);
+      }}
+      >
 
-
-        <FormField 
+        <FormField
           label="Nome da Categoria"
-          type="text"
+          // type="text"
           name="nome"
           value={values.nome}
           onChange={handleChange}
         />
-        
 
-        <div>
-          <label>
-            Descrição:
-            <textarea
-              type="text"
-              value={values.descricao}
-              name="descricao"
-              onChange={handleChange}
-              //onChange={function funcaoHandler(infosDoEvento) { 
-                // setNomeDaCategoria(infosDoEvento.target.value);
+        <FormField
+          label="Descrição"
+          type="textarea"
+          name="descricao"
+          value={values.descricao}
+          onChange={handleChange}
+        />
 
-            
-            />
-          </label>          
-        </div>
-
-        <FormField 
+        <FormField
           label="Cor"
           type="color"
           name="cor"
@@ -78,42 +95,30 @@ function CadastroCategoria() {
           onChange={handleChange}
         />
 
-        {/* <div>      
-          <label>
-            Cor:
-            <input
-              type="color"
-              value={values.cor}
-              name="cor"
-              onChange={handleChange}
-              //onChange={function funcaoHandler(infosDoEvento) { 
-                // setNomeDaCategoria(infosDoEvento.target.value);
-
-            />
-          </label>
-        </div> */}
-
-        <button>
+        <Button>
           Cadastrar
-        </button>
+        </Button>
       </form>
 
-      <ul>
-        {categorias.map((categoria, indice) => {
-          return(
-            <li key = {`${categoria}${indice}`}>
-              {categoria.nome}
-            </li>
-          )
-        })}
-      </ul>
+      {categorias.length === 0 && (
+        <div>
+          Carregando...
+        </div>
+      )}
 
+      <ul>
+        {categorias.map((categoria) => (
+          <li key={`${categoria.nome}`}>
+            {categoria.nome}
+          </li>
+        ))}
+      </ul>
 
       <Link to="/">
         Ir para home
       </Link>
     </PageDefault>
-  )
+  );
 }
 
 export default CadastroCategoria;
