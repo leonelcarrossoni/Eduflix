@@ -1,17 +1,35 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
+/* eslint-disable linebreak-style */
+import React from 'react';
+import { Link } from 'react-router-dom';
 import PageDefault from '../../../components/PageDefault';
+import FormField from '../../../components/FormField';
+import useForm from '../../../hooks/useForm';
 
 function CadastroVideo() {
-    return (
-      <PageDefault>
-        <h1>Cadastro de Vídeo</h1>
+  const { handleChange, values } = useForm({
+    
+  });
+  return (
+    <PageDefault>
+      <h1>Cadastro de Vídeo</h1>
 
-        <Link to="/cadastro/categoria">
-          Cadastar Categoria
-        </Link>
-      </PageDefault>
-    )
-  }
+      <form>
+        <FormField
+          label="Título do Vídeo"
+          name="titulo"
+          value={values.titulo}
+          onChange={handleChange}
+        />
 
-  export default CadastroVideo;
+        <Button type="submit">
+          Cadastrar
+        </Button>
+      </form>
+
+      <Link to="/cadastro/categoria">
+        Cadastar Categoria
+      </Link>
+    </PageDefault>
+  );
+}
+export default CadastroVideo;

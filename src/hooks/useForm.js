@@ -1,10 +1,11 @@
 /* eslint-disable linebreak-style */
 import { useState } from 'react';
 
-function useForm(ValoresIniciais) {
-  const [values, setValues] = useState(ValoresIniciais);
+function useForm(valoresIniciais) {
+  const [values, setValues] = useState(valoresIniciais);
 
   function setValue(chave, valor) {
+    // chave: nome, descricao, bla, bli
     setValues({
       ...values,
       [chave]: valor, // nome: 'valor'
@@ -19,7 +20,7 @@ function useForm(ValoresIniciais) {
   }
 
   function clearForm() {
-    setValues(ValoresIniciais);
+    setValues(valoresIniciais);
   }
 
   return {
